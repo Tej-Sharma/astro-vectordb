@@ -18,6 +18,7 @@ A highly performant local vector database using HNSW with persistent storage via
 ✅ No need for a separate process
 ✅ No dependencies needed
 ✅ Easy to use with Electron.js, React, Svelte, etc.
+✅ Highly performant and reliable using HNSW
 ✅ Just plug and play into your web app
 
 ## Usage
@@ -82,9 +83,37 @@ These are the following areas I need help with to improve the library:
     -   I'm still working on optimizing the algorithms more and second looks
         on how to improve performance would be great.
 
+## Why HNSW?
+
+It has the following advantages:
+
+-   **Fast search:** For my applications and machine, it's almost instantaneous.
+-   **Simplicity**: The core concept is easy to understand and implement.
+-   **Much better reliability:** While not having the highest precision, since there are multiple levels and multiple neighbors, there is a low chance of a node getting lost. There are many paths to reach it and multiple searches on each level.
+
+It does have the following disadvantages though:
+
+-   **Build time:** It takes longer to build the index than other methods. This is great if your application is one where the data builds up slowly OR if you don't care too much about build time
+-   **Memory usage:** It does use a bit more memory than other methods but I haven't benchmarked this too much yet as my applications require <100k vectors.
+
+## Which vectorizer to use?
+
+I highly recommend using the local HF vectorizer here: [Transformers.js](https://github.com/huggingface/transformers.js)
+
+The code for it comes out to be just:
+
+```
+const { pipeline } = await import('@xenova/transformers')
+const pipe = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+const res = await pipe(text, { pooling: 'mean', normalize: true })
+```
+
 ## Credits
 
+Of course, the original paper on HNSW: [arXiv:1603.09320](https://arxiv.org/abs/1603.09320) **[cs.DS]**
+
 Credits to https://github.com/deepfates/hnsw for some of the base.
+
 On top of this, I made a lot of additions:
 
 ✅ Completely new searching algorithm
