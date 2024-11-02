@@ -120,7 +120,7 @@ On top of this, I made a lot of additions:
 ✅ Handling additions when the node's neighbors are full
 ✅ Some more optimizations (but much more needed)
 
-MIT License
+## MIT License
 
 Copyright (c) [2024] [Tej-Sharma]
 
